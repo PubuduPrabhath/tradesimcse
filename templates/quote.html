@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    quote
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="mb-3 d-inline-flex">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="name" name="name" placeholder="Company Namel" type="text">
+            <button class="ms-2 btn btn-primary" type="submit">Submit</button>
+        </div>
+
+
+    </form>
+
+    <ul id="list" class="list-group">
+
+    </ul>
+{% endblock %}
+
+{% block script %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        let input = document.getElementById('name');
+
+        $.get('/search?q=', function(companies){
+
+            let html = '';
+            for (let id in companies){
+                html += '<li id="'+ companies[id].name +'">'+companies[id].name+'</li>';
+
+            }
+            document.getElementById('list').innerHTML = html;
+            li_list = document.getElementById('list').childNodes;
+            for (let n in li_list){
+                li_list[n].addEventListener('click', function(){input.value = li_list[n].id});
+                li_list[n].classList.add('list-group-item');
+            }
+
+        });
+
+        input.addEventListener('keyup', function(){
+            $.get('/search?q='+input.value, function(companies){
+
+                let html = '';
+                for (let id in companies){
+                    html += '<li id="'+ companies[id].name +'">'+companies[id].name+'</li>';
+
+                }
+                document.getElementById('list').innerHTML = html;
+                li_list = document.getElementById('list').childNodes;
+                for (let n in li_list){
+                    li_list[n].addEventListener('click', function(){input.value = li_list[n].id});
+                    li_list[n].classList.add('list-group-item');
+                }
+
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Apology
+{% endblock %}
+
+{% block main %}
+<table class="table">
+    <tr>
+        <th>Symbol</th>
+        <th>Company Name</th>
+        <th>Shares</th>
+        <th>Price</th>
+        <th>Total</th>
+    </tr>
+    {% for row in rows %}
+    <tr>
+        <td>{{ row.symbol }}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.shares }}</td>
+        <td>{{ row.price }}</td>
+        <td>{{ row.total }}</td>
+    </tr>
+
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Cash</td>
+        <td>{{ cash }}</td>
+    </tr><tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>TOTAL</td>
+        <td>{{ total }}</td>
+    </tr>
+</table>
+{% endblock %}
